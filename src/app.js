@@ -1,9 +1,9 @@
 import  express from 'express';
-import  { alertRoute } from './routes/alerts-route.js';
+import  { doorAlertRoute } from './routes/alerts-route.js';
 
 const app = express();
 const router = express.Router();
 
-app.use('/alerts', alertRoute);
+app.use('/door/alerts', doorAlertRoute);
 
 export { app };

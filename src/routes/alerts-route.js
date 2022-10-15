@@ -1,11 +1,11 @@
 import  express from 'express';
-import  { AlertController } from '../controllers/alert-controller.js';
+import  { DoorAlertsController } from '../controllers/door-alert-controller.js';
 
 const router = express.Router();
-const alertController = new AlertController();
+const doorAlertController = new DoorAlertsController();
 
-router.get('/', alertController.getAllAlerts);
-router.post('/', alertController.createNewAlert);
-router.get('/first', alertController.getFirstAlert);
+router.get('/', doorAlertController.getAllAlerts);
+router.post('/', doorAlertController.createNewAlert);
+router.get('/first', doorAlertController.getFirstAlert);
 
-export { router as alertRoute };
+export { router as doorAlertRoute };

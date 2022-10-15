@@ -1,9 +1,15 @@
 import  fs from 'fs';
 import  alertData from '../data/door-alerts.json' assert { type: "json" };
 import { nanoid } from 'nanoid';
+import { InsideHomeAlertsController } from './inside-home-controller.js';
+import { baseAlerts } from '../utils/baseAlerts.js';
 
 export class DoorAlertsController {
-  createNewAlert(req, res, next) {
+  constructor() {
+    this.insideHomeController = new InsideHomeAlertsController();
+  }
+
+  async createNewAlert(req, res, next) {
     const name = req.query.name;
   
     const newAction = {
@@ -11,11 +17,14 @@ export class DoorAlertsController {
       'name': name,
     }
   
-    // @ts-ignore
     alertData.push(newAction);
   
     fs.writeFileSync('src/data/door-alerts.json', JSON.stringify(alertData));
-  
+
+    if (name === baseAlerts.ARRIVE_DOOR) {
+      await this.insideHomeController.turnOnAlertLight();
+    }
+
     res.status(201).send(newAction);
   };
   

@@ -1,7 +1,6 @@
 import { app } from './app.js';
+import { enviroments } from "./configs/enviroments.js";
 
-const port = '3000';
-
-app.listen(port, () => {
-  console.log(`App running at port ${port}`);
+app.listen(enviroments.port, () => {
+  console.log(`App running at port ${enviroments.port}`);
 });

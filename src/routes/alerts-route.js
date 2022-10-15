@@ -1,9 +1,11 @@
 import  express from 'express';
-import  { post, get } from '../controllers/alert-controller.js';
+import  { AlertController } from '../controllers/alert-controller.js';
 
 const router = express.Router();
+const alertController = new AlertController();
 
-router.get('/', get);
-router.post('/', post);
+router.get('/', alertController.getAllAlerts);
+router.post('/', alertController.createNewAlert);
+router.get('/first', alertController.getFirstAlert);
 
 export { router as alertRoute };

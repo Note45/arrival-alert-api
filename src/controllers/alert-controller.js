@@ -1,25 +1,36 @@
 import  fs from 'fs';
-import  { nanoid } from 'nanoid';
 import  alertData from '../data/alerts.json' assert { type: "json" };
 
-export const post = (req, res, next) => {
-  const name = req.query.name;
-  const action = req.query.action;
+export class AlertController {
+  createNewAlert(req, res, next) {
+    const newId = alertData.length;
+    const name = req.query.name;
+  
+    const newAction = {
+      'id': newId,
+      'name': name,
+    }
+  
+    // @ts-ignore
+    alertData.push(newAction);
+  
+    fs.writeFileSync('src/data/alerts.json', JSON.stringify(alertData));
+  
+    res.status(201).send(newAction);
+  };
+  
+  getAllAlerts(req, res, next) {
+    res.status(200).send(alertData);
+  };
 
-  const newAction = {
-    'id': nanoid(),
-    'name': name,
-    'action': action,
-  }
+  getFirstAlert(req, res, next) {
+    const firtAlert = alertData[0];
 
-  // @ts-ignore
-  alertData.push(newAction);
+    alertData.shift();
+    const alertsWithoutFirst = alertData;
+    fs.writeFileSync('src/data/alerts.json', JSON.stringify(alertsWithoutFirst));
 
-  fs.writeFileSync('src/data/alerts.json', JSON.stringify(alertData));
+    res.status(200).send(firtAlert);
+  };
+}
 
-  res.status(201).send(newAction);
-};
-
-export const get = (req, res, next) => {
-  res.status(200).send(alertData);
-};

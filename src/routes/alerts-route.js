@@ -7,5 +7,6 @@ const doorAlertController = new DoorAlertsController();
 router.get('/', doorAlertController.getAllAlerts.bind(doorAlertController));
 router.post('/', doorAlertController.createNewAlert.bind(doorAlertController));
 router.get('/first', doorAlertController.getFirstAlert.bind(doorAlertController));
+router.post('/sound', doorAlertController.playDoorSound.bind(doorAlertController));
 
 export { router as doorAlertRoute };
